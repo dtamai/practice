@@ -5,7 +5,7 @@ Some code practice from internet.
 
 ## Euler
 
-[https://projecteuler.net/](Project Euler)
+[Project Euler](https://projecteuler.net/)
 
 To run:
 
@@ -16,4 +16,4 @@ rake euler[n] # problem n
 
 ## License
 
-The Unlicense. See [LICENSE](License).
+The Unlicense. See [LICENSE](LICENSE).
