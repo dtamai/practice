@@ -6,3 +6,13 @@ EulerProblem.new 1 do
   end.reduce(&:+)
 end
 
+EulerProblem.new 2 do
+  fib = lambda do |accum, max|
+    t = accum[-1] + accum[-2]
+    return accum if t > max
+    accum << t
+    fib.call(accum, max)
+  end
+  fib.call([1,2], 4_000_000).select(&:even?).reduce(&:+)
+end
+
