@@ -16,3 +16,26 @@ EulerProblem.new 2 do
   fib.call([1,2], 4_000_000).select(&:even?).reduce(&:+)
 end
 
+EulerProblem.new 3 do
+  # Amazing prime number candidate generator!
+  candidates = Enumerator.new do |c|
+    c.yield 2
+    t = 1
+    loop { c.yield t += 2 }
+  end
+
+  k = 600_851_475_143
+  int_factors = []
+  # Trial division
+  while i = candidates.next do
+    break if i*i > k
+
+    while k % i == 0 do
+      int_factors << i
+      k /= i
+    end
+  end
+  int_factors << k if k > 1
+  int_factors.last
+end
+
