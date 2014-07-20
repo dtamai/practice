@@ -39,3 +39,15 @@ EulerProblem.new 3 do
   int_factors.last
 end
 
+EulerProblem.new 4 do
+  is_palindromic = lambda { |n| n.to_s == n.to_s.reverse }
+
+  max_palindrome = 0
+  # Lower triangle of a matrix[i x j]
+  999.downto(100) { |i| 999.downto(i) { |j|
+    x = i*j
+    max_palindrome = x if x > max_palindrome && is_palindromic[x]
+  }}
+  max_palindrome
+end
+
