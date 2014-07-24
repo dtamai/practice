@@ -51,3 +51,26 @@ EulerProblem.new 4 do
   max_palindrome
 end
 
+EulerProblem.new 5 do
+  divide_or_skip = lambda do |numbers, denominator|
+    numbers.map do |n|
+      n % denominator == 0 ? n/denominator : n
+    end
+  end
+
+  factorization = lambda do |numbers, candidate, factors|
+    new = divide_or_skip[numbers, candidate].delete_if { |n| n == 1}
+
+    if new.length < numbers.length
+      factors << candidate
+    else
+      candidate += 1
+    end
+
+    factorization[new, candidate, factors] unless new.empty?
+    factors
+  end
+
+  factorization[(1..20).to_a, 2, []].reduce(&:*)
+end
+
