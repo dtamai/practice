@@ -74,3 +74,10 @@ EulerProblem.new 5 do
   factorization[(1..20).to_a, 2, []].reduce(&:*)
 end
 
+EulerProblem.new 6 do
+  numbers = 1.upto(100).to_a
+  sq_sum = numbers.map{ |n| n**2 }.reduce(&:+)
+  sum_sq = numbers.reduce(&:+)**2
+  sum_sq - sq_sum
+end
+
