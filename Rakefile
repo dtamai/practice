@@ -10,3 +10,13 @@ task :euler, [:n] do |t, args|
     EulerProblem.list.each_value(&:go)
   end
 end
+
+desc "Run Kata n-th problem or all"
+task :kata, [:n] do |t, args|
+  if args[:n]
+    fname = './kata/%02d.rb' % Integer(args[:n])
+    load fname
+  else
+    TODO implement
+  end
+end
