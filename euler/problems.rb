@@ -17,12 +17,8 @@ EulerProblem.new 2 do
 end
 
 EulerProblem.new 3 do
-  # Amazing prime number candidate generator!
-  candidates = Enumerator.new do |c|
-    c.yield 2
-    t = 1
-    loop { c.yield t += 2 }
-  end
+  require_relative './primes'
+  candidates = PrimeCandidateGenerator.new
 
   k = 600_851_475_143
   int_factors = []
