@@ -77,3 +77,21 @@ EulerProblem.new 6 do
   sum_sq - sq_sum
 end
 
+EulerProblem.new 7 do
+  require_relative './primes'
+  candidates = PrimeCandidateGenerator.new
+  primes = []
+
+  while i = candidates.next do
+    break if primes.length >= 10_001
+
+    prime = true
+    primes.each do |p|
+      prime = (i.modulo(p) != 0)
+      break if !prime
+    end
+    primes << i if prime
+  end
+  primes.last
+end
+
