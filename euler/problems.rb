@@ -125,3 +125,17 @@ EON
   end.max
 
 end
+
+EulerProblem.new 9 do
+  -> {
+    # Ordering c >= b >= a
+    # Geometry: c < a + b, so c must be less than 500
+    500.downto 1 do |c|
+      c.downto 1 do |b|
+        b.downto (c - b + 1) do |a|
+          return a*b*c if (a + b + c == 1000) && (a*a + b*b == c*c)
+        end
+      end
+    end
+  }.call
+end
