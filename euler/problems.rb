@@ -139,3 +139,31 @@ EulerProblem.new 9 do
     end
   }.call
 end
+
+EulerProblem.new 10 do
+  primes = [2]
+
+  sieve = ->(numbers, prev) {
+    max = numbers.last
+    prev.each do |p|
+      break if p*p > max
+      numbers.delete_if { |n| n % p == 0 }
+    end
+    new_primes = numbers.slice!(0, 1)
+    new_primes.each do |p|
+      break if p*p > max
+      numbers.delete_if { |n| n % p == 0 }
+
+      # Change the array while iterating!
+      new_primes << numbers.shift if numbers[0]
+    end
+    primes.concat new_primes.concat numbers
+  }
+  (10_000..2_000_000).step(10_000).to_a.unshift(1).each_cons(2) do |l|
+    numbers = Range.new(l[0] + 1, l[1]).to_a
+    sieve.call(numbers, primes)
+  end
+
+  primes.reduce(&:+)
+end
+
