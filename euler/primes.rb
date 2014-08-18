@@ -55,7 +55,7 @@ class TrialDivision
       end
     end
 
-    factors
+    factors.sort
   end
 
 end

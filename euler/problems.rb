@@ -1,4 +1,5 @@
 require_relative 'problem'
+require_relative './primes'
 
 EulerProblem.new 1 do
   (1...1000).to_a.keep_if do |n|
@@ -17,13 +18,12 @@ EulerProblem.new 2 do
 end
 
 EulerProblem.new 3 do
-  require_relative './primes'
   candidates = FactorsCandidatesGenerator.new
   trial_divider = TrialDivision.new(candidates)
 
   k = 600_851_475_143
   int_factors = trial_divider.factorize k
-  int_factors.last
+  int_factors.take_while { |n| n*n < k }.last
 end
 
 EulerProblem.new 4 do
@@ -69,7 +69,6 @@ EulerProblem.new 6 do
 end
 
 EulerProblem.new 7 do
-  require_relative './primes'
   candidates = PrimeCandidateGenerator.new
   primes = []
 
@@ -209,3 +208,30 @@ EulerProblem.new 11 do
   [vmax, hmax, dmax1, dmax2].max
 end
 
+EulerProblem.new 12 do
+  triangles = Enumerator.new do |t|
+    naturals = 1.upto Float::INFINITY
+    sum = 0
+    loop { t.yield sum += naturals.next }
+  end
+
+  factorize = ->(n) {
+    factors = []
+    max = Math.sqrt(n).floor
+    1.upto max do |k|
+      if n % k == 0
+        factors << n
+        factors << n/k
+      end
+    end
+    factors
+  }
+
+  n = 0
+  loop do
+    n = triangles.next
+    factors = factorize.call(n)
+    break if factors.length > 500
+  end
+  n
+end
