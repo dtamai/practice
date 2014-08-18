@@ -18,20 +18,11 @@ end
 
 EulerProblem.new 3 do
   require_relative './primes'
-  candidates = PrimeCandidateGenerator.new
+  candidates = FactorsCandidatesGenerator.new
+  trial_divider = TrialDivision.new(candidates)
 
   k = 600_851_475_143
-  int_factors = []
-  # Trial division
-  while i = candidates.next do
-    break if i*i > k
-
-    while k % i == 0 do
-      int_factors << i
-      k /= i
-    end
-  end
-  int_factors << k if k > 1
+  int_factors = trial_divider.factorize k
   int_factors.last
 end
 
