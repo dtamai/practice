@@ -14,6 +14,7 @@ class EulerProblem
   end
 
   def go
+    t0 = Time.now
     runner = Thread.new do
       @@problems[number] = body.call
     end
@@ -24,6 +25,7 @@ class EulerProblem
     runner.join
     limit.kill
 
-    puts "Problem #{number}: #{@@problems[number]}"
+    t2 = Time.now
+    puts "Problem #{number} [#{(t2 - t0).round 3}s]: #{@@problems[number]}"
   end
 end
