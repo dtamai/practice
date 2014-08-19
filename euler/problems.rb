@@ -341,3 +341,26 @@ EulerProblem.new 13 do
   ]
   hundreds.reduce(&:+).to_s.slice(0, 10)
 end
+
+EulerProblem.new 14 do
+  done = ->(n) { n == 1 }
+  even = ->(n) { n.even? }
+  odd = ->(n) { n.odd? }
+  collatzes = {}
+  collatz_seq = ->(n) {
+    return collatzes[n] if collatzes[n]
+    case n
+    when done then return 1
+    when even
+      collatzes[n] = collatz_seq.call(n/2) + 1
+    when odd
+      collatzes[n] = collatz_seq.call(3*n + 1) + 1
+    end
+  }
+
+  (1..1_000_000).each do |n|
+    collatz_seq.call(n)
+  end
+  max = collatzes.values.max
+  collatzes.select{ |k,v| v == max }.keys.first
+end
