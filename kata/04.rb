@@ -1,15 +1,31 @@
 module Kata04
 
-  class Weather
+  class SimpleFixedWidth
+
+    attr_reader :lines
+
+    def initialize(file)
+      @lines = File.readlines file
+    end
+
+    def observations
+      lines
+    end
+
+    def extract_values(cols, &conversion)
+      observations.map do |l|
+        conversion.call(l[cols].strip)
+      end
+    end
+
+  end
+
+  class Weather < SimpleFixedWidth
 
     # line 1: header
     # line 2: separator
     # lines 3-31: observations
     # line 32: summary
-    def lines
-      @lines ||= File.readlines 'kata/data/weather.dat'
-    end
-
     def observations
       lines[2..30]
     end
@@ -29,33 +45,13 @@ module Kata04
       extract_values(11..16, &:to_i)
     end
 
-    def extract_values(cols, &conversion)
-      observations.map do |l|
-        conversion.call(l[cols].strip)
-      end
-    end
-
   end
 
-end
-
-w = Kata04::Weather.new
-min = [w.day, w.min_temp, w.max_temp].transpose.map do |day, min, max|
-  [day, max - min]
-end.min{|a,b| b[1] <=> a[1]}
-puts "Minimum temperature spread (#{min[1]}) on day #{min[0]}"
-
-module Kata04
-
-  class Football
+  class Football < SimpleFixedWidth
 
     # line 1: header
     # lines 2-18,20-22: observations
     # line 19: separator
-    def lines
-      @lines ||= File.readlines 'kata/data/football.dat'
-    end
-
     def observations
       lines[(1..17)] + lines[19..22]
     end
@@ -75,18 +71,20 @@ module Kata04
       extract_values(50..53, &:to_i)
     end
 
-    def extract_values(cols, &conversion)
-      observations.map do |l|
-        conversion.call(l[cols].strip)
-      end
-    end
-
   end
 
 end
 
-f = Kata04::Football.new
-min = [f.name, f.for_goals, f.against_goals].transpose.map do |name, f, a|
-  [name, f - a]
-end.min{|a,b| b[1] <=> a[1]}
-puts "Team with best goal balance (#{min[1]}) is #{min[0]}"
+def min_b_minus_c(a, b, c)
+  [a, b, c].transpose.map do |a, b, c|
+    [a, b - c]
+  end.min{|a,b| b[1] <=> a[1]}
+end
+
+w = Kata04::Weather.new('./kata/data/weather.dat')
+min_spread = min_b_minus_c(w.day, w.max_temp, w.min_temp)
+puts "Minimum temperature spread (#{min_spread[1]}) on day #{min_spread[0]}"
+
+f = Kata04::Football.new('./kata/data/football.dat')
+min_balance = min_b_minus_c(f.name, f.for_goals, f.against_goals)
+puts "Team with best goal balance (#{min_balance[1]}) is #{min_balance[0]}"
