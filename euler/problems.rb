@@ -364,3 +364,13 @@ EulerProblem.new 14 do
   max = collatzes.values.max
   collatzes.select{ |k,v| v == max }.keys.first
 end
+
+EulerProblem.new 15 do
+  factorial = ->(n) {
+    (2..n).inject(1) { |t, n| t*n }
+  }
+  # 40 segments, 20 down, 20 right
+  # 40!/(20!20!) => permutation of multisets
+  factorial[40]/factorial[20]/factorial[20]
+end
+
