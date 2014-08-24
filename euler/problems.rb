@@ -378,3 +378,39 @@ EulerProblem.new 16 do
   (2**1000).to_s.split('').map(&:to_i).reduce(&:+)
 end
 
+EulerProblem.new 17 do
+  words = Hash.new do |hash, key|
+    case key
+    when 21..99
+      tens = key/10
+      upto_10 = key - 10*tens
+      tentys = key/10*10
+      str = hash[tentys] + hash[upto_10]
+      hash[key] = str
+    when 99..999
+      hundreds = key/100
+      upto_100 = key - 100*hundreds
+      perfect_100 = upto_100 == 0
+      if perfect_100
+        hash[hundreds] + 'hundred'
+      else
+        hash[hundreds] + 'hundredand' + hash[upto_100]
+      end
+    end
+  end
+  words[1] = 'one';    words[11] = 'eleven';    words[30] = 'thirty'
+  words[2] = 'two';    words[12] = 'twelve';    words[40] = 'forty'
+  words[3] = 'three';  words[13] = 'thirteen';  words[50] = 'fifty'
+  words[4] = 'four';   words[14] = 'fourteen';  words[60] = 'sixty'
+  words[5] = 'five';   words[15] = 'fifteen';   words[70] = 'seventy'
+  words[6] = 'six';    words[16] = 'sixteen';   words[80] = 'eighty'
+  words[7] = 'seven';  words[17] = 'seventeen'; words[90] = 'ninety'
+  words[8] = 'eight';  words[18] = 'eighteen';  words[1000] = 'onethousand'
+  words[9] = 'nine';   words[19] = 'nineteen';
+  words[10] = 'ten';   words[20] = 'twenty'
+
+  1.upto(1000).reduce(0) do |t, n|
+    t += words[n].length
+  end
+end
+
