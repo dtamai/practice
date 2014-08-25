@@ -273,3 +273,40 @@ EulerProblem.new 17 do
   end
 end
 
+EulerProblem.new 18 do
+  require_relative './data/18'
+  tri = data
+
+  h = tri.size
+  ary = tri[h-1]
+  h.downto(2) do |n|
+    pre = tri[n-2]
+    nl = ary.each_index.each_cons(2).map do |pair|
+      parent = pre[pair[0]]
+      pair.map do |el|
+        ary[el] + parent
+      end.max
+    end
+    ary = nl
+  end
+  ary[0]
+end
+
+EulerProblem.new 67 do
+  require_relative './data/67'
+  tri = data
+
+  h = tri.size
+  ary = tri[h-1]
+  h.downto(2) do |n|
+    pre = tri[n-2]
+    nl = ary.each_index.each_cons(2).map do |pair|
+      parent = pre[pair[0]]
+      pair.map do |el|
+        ary[el] + parent
+      end.max
+    end
+    ary = nl
+  end
+  ary[0]
+end
