@@ -292,6 +292,13 @@ EulerProblem.new 18 do
   ary[0]
 end
 
+EulerProblem.new 19 do
+  require 'date'
+  (Date.new(1901, 1, 1)..Date.new(2000, 12, 31)).to_a.keep_if do |d|
+    d.sunday? && d.day == 1
+  end.size
+end
+
 EulerProblem.new 67 do
   require_relative './data/67'
   tri = data
@@ -310,3 +317,4 @@ EulerProblem.new 67 do
   end
   ary[0]
 end
+
