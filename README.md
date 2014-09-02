@@ -18,6 +18,14 @@ rake euler[n] # problem n
 
 [CodeKata](http://codekata.com/)
 
+## Fizzes
+
+[FizzBuzz](https://en.wikipedia.org/wiki/Fizz_buzz)
+
+Some ways to implement the FizzBuzz problem in Ruby and R.
+
+There is no runner.
+
 ## License
 
 The Unlicense. See [LICENSE](LICENSE).
