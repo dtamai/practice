@@ -299,6 +299,10 @@ EulerProblem.new 19 do
   end.size
 end
 
+EulerProblem.new 20 do
+  (1..100).reduce(&:*).to_s.each_char.map(&:to_i).reduce(&:+)
+end
+
 EulerProblem.new 67 do
   require_relative './data/67'
   tri = data
