@@ -59,3 +59,21 @@ class TrialDivision
   end
 
 end
+
+class ProperDivisors
+  def self.for(n)
+    max = n
+    candidate = 2
+    divisors = [1]
+    while candidate < max do
+      if n % candidate == 0
+        divisors << candidate
+        max = n/candidate
+        divisors << max
+      end
+      candidate += 1
+    end
+    divisors.sort
+  end
+end
+

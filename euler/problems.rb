@@ -303,6 +303,22 @@ EulerProblem.new 20 do
   (1..100).reduce(&:*).to_s.each_char.map(&:to_i).reduce(&:+)
 end
 
+EulerProblem.new 21 do
+  require_relative './primes'
+
+  nn = {}
+  amicable = []
+  1.upto 10_000 do |n|
+    nn[n] = ProperDivisors.for(n).reduce(&:+)
+  end
+  nn.each do |k,v|
+    if nn[v] == k && k != v
+      amicable << v
+    end
+  end
+  amicable.reduce(&:+)
+end
+
 EulerProblem.new 67 do
   require_relative './data/67'
   tri = data
