@@ -319,6 +319,19 @@ EulerProblem.new 21 do
   amicable.reduce(&:+)
 end
 
+EulerProblem.new 22 do
+  # Capital letters: 65 - 90
+  sum_codes = ->(str) {
+    str.upcase.codepoints.map do |val|
+      val - 64
+    end.reduce(&:+)
+  }
+  names = File.read 'euler/data/p022_names.txt'
+  names.gsub(/"/, '').split(',').sort.each_with_index.map do |name, idx|
+    sum_codes.call(name) * (idx + 1)
+  end.reduce(&:+)
+end
+
 EulerProblem.new 67 do
   require_relative './data/67'
   tri = data
