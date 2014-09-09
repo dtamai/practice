@@ -69,20 +69,7 @@ EulerProblem.new 6 do
 end
 
 EulerProblem.new 7 do
-  candidates = PrimeCandidateGenerator.new
-  primes = []
-
-  while i = candidates.next do
-    break if primes.length >= 10_001
-
-    prime = true
-    primes.each do |p|
-      prime = (i.modulo(p) != 0)
-      break if !prime
-    end
-    primes << i if prime
-  end
-  primes.last
+  PrimeGenerator.new.take(10_001).last
 end
 
 EulerProblem.new 8 do
@@ -330,6 +317,39 @@ EulerProblem.new 22 do
   names.gsub(/"/, '').split(',').sort.each_with_index.map do |name, idx|
     sum_codes.call(name) * (idx + 1)
   end.reduce(&:+)
+end
+
+EulerProblem.new 27 do
+  primes = PrimeGenerator.new.take(2000)
+  max_prime = primes.last
+  formula_gen = ->(a, b) {
+    ->(n) {
+      n**2 + n*a + b
+    }
+  }
+
+  # when n = 0 => b is prime
+  bs = primes.clone.keep_if { |b| b < 1000 }
+  max = bs.map do |b|
+    # when n = 1 => a > -b
+    as = -b..1000
+    as.map do |a|
+      f = formula_gen.call(a, b)
+      i = 0
+      while true do
+        val = f.call i
+        if val > max_prime
+          raise "Not enough primes: f(#{a},#{b}) = #{val}, but max_prime = #{max_prime}"
+        end
+        if !primes.include? val
+          break
+        end
+        i += 1
+      end
+      {i: i, a: a, b: b}
+    end.max { |t1, t2| t1[:i] <=> t2[:i] }
+  end.max { |t1, t2| t1[:i] <=> t2[:i] }
+  max[:a] * max[:b]
 end
 
 EulerProblem.new 67 do

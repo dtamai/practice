@@ -30,7 +30,29 @@ class PrimeCandidateGenerator
     @candidates = FactorsCandidatesGenerator.new
     @candidates.next if @candidates.peek == 1
   end
+end
 
+class PrimeGenerator
+  attr_reader :primes
+
+  def initialize
+    @candidates = PrimeCandidateGenerator.new
+    @primes = []
+  end
+
+  def take(n)
+    while i = @candidates.next do
+      break if primes.length >= n
+
+      prime = true
+      primes.each do |p|
+        prime = (i.modulo(p) != 0)
+        break if !prime
+      end
+      primes << i if prime
+    end
+    primes
+  end
 end
 
 class TrialDivision
