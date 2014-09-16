@@ -319,6 +319,19 @@ EulerProblem.new 22 do
   end.reduce(&:+)
 end
 
+EulerProblem.new 25 do
+  f1 = f2 = 1
+  fib = 2
+  i = 2
+  while fib.to_s.size < 1_000 do
+    i += 1
+    fib = f1 + f2
+    f1 = f2
+    f2 = fib
+  end
+  i
+end
+
 EulerProblem.new 27 do
   primes = PrimeGenerator.new.take(2000)
   max_prime = primes.last
