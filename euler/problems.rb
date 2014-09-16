@@ -319,6 +319,14 @@ EulerProblem.new 22 do
   end.reduce(&:+)
 end
 
+EulerProblem.new 24 do
+  [0,1,2,3,4,5,6,7,8,9].
+    permutation(10).
+    sort.
+    at(1_000_000 - 1).
+    join
+end
+
 EulerProblem.new 25 do
   f1 = f2 = 1
   fib = 2
