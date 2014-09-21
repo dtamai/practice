@@ -10,9 +10,9 @@ end
 EulerProblem.new 2 do
   fib = lambda do |accum, max|
     t = accum[-1] + accum[-2]
-    return accum if t > max
+    return accum if t > maentries
     accum << t
-    fib.call(accum, max)
+    fib.call(accum, maentries)
   end
   fib.call([1,2], 4_000_000).select(&:even?).reduce(&:+)
 end
@@ -371,6 +371,18 @@ EulerProblem.new 27 do
     end.max { |t1, t2| t1[:i] <=> t2[:i] }
   end.max { |t1, t2| t1[:i] <=> t2[:i] }
   max[:a] * max[:b]
+end
+
+EulerProblem.new 28 do
+  layer = sum = last = 1
+  while layer < 5
+    layer += 2
+    incr = layer - 1
+    local_sum = last*4 + incr*10
+    last += incr*4
+    sum += local_sum
+  end
+  sum
 end
 
 EulerProblem.new 67 do
