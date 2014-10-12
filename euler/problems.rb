@@ -340,6 +340,31 @@ EulerProblem.new 25 do
   i
 end
 
+EulerProblem.new 26 do
+  # Adapted from https://oeis.org/A051626
+  rep_len = ->(n) {
+    lpow = 1
+
+    loop do
+      (lpow - 1).downto 0 do |mpow|
+        if ((10**lpow - 10**mpow) % n) == 0
+          return (lpow - mpow)
+        end
+      end
+      lpow += 1
+    end
+  }
+
+  ->() {
+    (1_000.downto 1).to_a.map do |n|
+      len = rep_len.call n
+      if len == n - 1 # Max possible cycle length: break earlier
+        return n
+      end
+    end.max
+  }.call
+end
+
 EulerProblem.new 27 do
   primes = PrimeGenerator.new.take(2000)
   max_prime = primes.last
