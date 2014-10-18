@@ -95,7 +95,7 @@ class ProperDivisors
       end
       candidate += 1
     end
-    divisors.sort
+    divisors.sort.uniq
   end
 end
 
