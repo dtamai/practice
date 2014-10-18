@@ -319,6 +319,33 @@ EulerProblem.new 22 do
   end.reduce(&:+)
 end
 
+EulerProblem.new 23 do
+  require_relative './primes.rb'
+  require 'set'
+  min = 1
+  max = 28123
+
+  abundants = []
+  min.upto max do |n|
+    sum = ProperDivisors.for(n).reduce(&:+)
+    if sum > n
+      abundants << n
+    end
+  end
+
+  abundant_sum = []
+  abundants.each do |f|
+    abundants.each do |n|
+      next if f > n
+      s = f + n
+      break if s > max
+      abundant_sum << s
+    end
+  end
+  not_sum = Set.new(1.upto(max)) - abundant_sum.uniq
+  not_sum.reduce(&:+)
+end
+
 EulerProblem.new 24 do
   [0,1,2,3,4,5,6,7,8,9].
     permutation(10).
