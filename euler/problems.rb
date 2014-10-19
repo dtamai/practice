@@ -437,6 +437,16 @@ EulerProblem.new 28 do
   sum
 end
 
+EulerProblem.new 29 do
+  range = 2..100
+
+  range.flat_map do |a|
+    range.map do |b|
+      a**b
+    end
+  end.uniq.size
+end
+
 EulerProblem.new 67 do
   require_relative './data/67'
   tri = data
