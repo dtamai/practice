@@ -447,6 +447,15 @@ EulerProblem.new 29 do
   end.uniq.size
 end
 
+EulerProblem.new 30 do
+  range = 2..(9**5 * 6)
+
+  range.each_with_object({}) do |n, h|
+    v = n.to_s.each_char.map { |c| c.to_i ** 5 }.reduce(&:+)
+    h[n] = v if n == v
+  end.select { |k, v| k == v}.keys.reduce(&:+)
+end
+
 EulerProblem.new 67 do
   require_relative './data/67'
   tri = data
