@@ -476,6 +476,21 @@ EulerProblem.new 31 do
   count
 end
 
+EulerProblem.new 32 do
+  values = {}
+  all = '123456789'.split('').permutation.to_a.map(&:join).each do |n|
+    a1 = n.slice(0, 2).to_i
+    b1 = n.slice(2, 3).to_i
+    a2 = n.slice(0, 1).to_i
+    b2 = n.slice(1, 4).to_i
+    prod = n.slice(5, 4).to_i
+    if a1*b1 == prod || a2*b2 == prod
+      values[prod] = true
+    end
+  end
+  values.each_key.reduce(&:+)
+end
+
 EulerProblem.new 67 do
   require_relative './data/67'
   tri = data
