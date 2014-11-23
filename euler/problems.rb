@@ -491,6 +491,42 @@ EulerProblem.new 32 do
   values.each_key.reduce(&:+)
 end
 
+EulerProblem.new 33 do
+  naive_cancellation = lambda do |num, den|
+    num_chars = num.to_s.split('')
+    den_chars = den.to_s.split('')
+    naive = if den_chars[1] == '0'
+              nil
+            elsif num_chars[0] == den_chars[0]
+              naive = Rational(num_chars[1], den_chars[1])
+            elsif num_chars[0] == den_chars[1]
+              naive = Rational(num_chars[1], den_chars[0])
+            elsif num_chars[1] == den_chars[0]
+              naive = Rational(num_chars[0], den_chars[1])
+            elsif num_chars[1] == den_chars[1]
+              naive = Rational(num_chars[0], den_chars[0])
+            end
+  end
+
+  curious = Rational(1, 1)
+  numerator = 11.upto(99).each do |num|
+    99.downto(num).map do |den|
+      val = Rational(num, den)
+      if val == 1
+        next
+      end
+      if num.modulo(10) == 0 && den.modulo(10) == 0
+        next
+      end
+      naive_val = naive_cancellation.call(num, den)
+      if val == naive_val
+        curious *= val
+      end
+    end
+  end
+  curious.denominator
+end
+
 EulerProblem.new 67 do
   require_relative './data/67'
   tri = data
