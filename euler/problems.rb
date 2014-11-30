@@ -527,6 +527,24 @@ EulerProblem.new 33 do
   curious.denominator
 end
 
+EulerProblem.new 34 do
+  facts = {
+    0 => 1,   1 => 1,   2 => 2,     3 => 6,      4 => 24,
+    5 => 120, 6 => 720, 7 => 5_040, 8 => 40_320, 9 => 362_880
+  }
+
+  sum = 0
+  10.upto(2_540_160) do |n|
+    curious = n.to_s.split('').map(&:to_i).map do |int|
+      facts[int]
+    end.reduce(:+)
+    if n == curious
+      sum += n
+    end
+  end
+  sum
+end
+
 EulerProblem.new 67 do
   require_relative './data/67'
   tri = data
