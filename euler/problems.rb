@@ -545,6 +545,27 @@ EulerProblem.new 34 do
   sum
 end
 
+EulerProblem.new 35 do
+  # My own prime numbers implementation is so bad that it can't even
+  # find the required primes before the problem times out =/
+  cyclic_permutation = lambda do |ary|
+    ary.unshift(ary.pop).join.to_i
+  end
+  require 'prime'
+  primes = Prime.take_while{|p| p < 1_000_000}.map do |p|
+    chars = p.to_s.split('')
+    easily_not_prime = chars.map(&:to_i).any?{|a| a.even? || a == 5}
+    unless easily_not_prime
+      chars.size.times.map{ cyclic_permutation[chars] }
+    end
+  end.compact.inject(0) do |count, value|
+    if value.map{ |perm| Prime.prime?(perm) }.all?
+      count += 1
+    end
+    count
+  end + [2, 5].size
+end
+
 EulerProblem.new 67 do
   require_relative './data/67'
   tri = data
