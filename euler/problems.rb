@@ -566,6 +566,14 @@ EulerProblem.new 35 do
   end + [2, 5].size
 end
 
+EulerProblem.new 36 do
+  is_palindromic = lambda { |n| n.to_s == n.to_s.reverse }
+  is_double_palindromic = lambda do |n|
+    is_palindromic[n] && is_palindromic[n.to_s(2)]
+  end
+  1.upto(1_000_000).map{ |n| is_double_palindromic[n] ? n : 0 }.reduce(&:+)
+end
+
 EulerProblem.new 67 do
   require_relative './data/67'
   tri = data
