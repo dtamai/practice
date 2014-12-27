@@ -574,6 +574,24 @@ EulerProblem.new 36 do
   1.upto(1_000_000).map{ |n| is_double_palindromic[n] ? n : 0 }.reduce(&:+)
 end
 
+EulerProblem.new 37 do
+  require 'prime'
+  is_truncatable_prime = lambda do |n|
+    str = n.to_s
+    2.upto(str.size).map do |last|
+      str[0..-last].to_i.prime? && str[(last-1)..-1].to_i.prime?
+    end.reduce(:&)
+  end
+  truncatables = []
+  Prime.take_while do |n|
+    if is_truncatable_prime.call(n)
+      truncatables << n
+    end
+    truncatables.size < 11
+  end
+  truncatables.reduce(&:+)
+end
+
 EulerProblem.new 67 do
   require_relative './data/67'
   tri = data
